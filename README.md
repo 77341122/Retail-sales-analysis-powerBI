@@ -18,22 +18,6 @@ Concretely, the project sets out to:
 
 ---
 
-## Table of Contents
-
-- [Business Context](#business-context)
-- [Business Questions](#business-questions)
-- [Headline Results](#headline-results)
-- [Data Sources](#data-sources)
-- [Data Cleaning and Transformation](#data-cleaning-and-transformation)
-- [Data Modeling](#data-modeling)
-- [Time Intelligence: The Calendar Table](#time-intelligence-the-calendar-table)
-- [Calculated Columns and Measures](#calculated-columns-and-measures)
-- [Outputs](#outputs)
-- [Insights](#insights)
-- [Recommendations](#recommendations)
-- [Repository Structure](#repository-structure)
-- [Getting Started](#getting-started)
-- [Tools and Technologies](#tools-and-technologies)
 
 ---
 
@@ -45,18 +29,7 @@ Leadership needs a consolidated view that answers strategic questions about grow
 
 ---
 
-## Business Questions
-
-The report is organised around four core questions. Each maps to one or more pages in the final report.
-
-| Theme | Question | Where it is answered |
-|---|---|---|
-| **Growth Velocity** | Where and when did revenue experience its most significant Month-over-Month and Quarter-over-Quarter inflection points? | MoM and QoQ Growth |
-| **Market Dominance and Volume** | How does the top-performing region compare to emerging territories in revenue, volume, and transaction efficiency? | Revenue by Country/Year, Country/Town Performance |
-| **Portfolio Mix Analysis** | Which product categories and price tiers (Low, Medium, High Value) yield the highest relative gross margin? | Category KPIs, Price Range KPIs |
-| **Human Capital Performance** | Who are the core sales representatives anchoring the company's bottom-line profitability? | Top Sales Representatives |
-
-> The full problem statement and objectives are documented in [`business-questions/`](business-questions/).
+.
 
 ---
 
@@ -210,49 +183,6 @@ Marking this as the model's official date table is what allows the Month-over-Mo
 
 ---
 
-## Calculated Columns and Measures
-
-The calculation layer is deliberately split between **calculated columns** (computed row by row, used for attributes and per-transaction values) and **measures** (aggregations evaluated in the context of the report). Expand the sections below for detail.
-
-<details>
-<summary><strong>Calculated columns</strong></summary>
-
-<br>
-
-**On FactSales** — built from product price and cost brought across with `RELATED`:
-
-- **Total Revenue** — derived from the product retail price and units sold, net of the revenue discount on the transaction.
-- **Total Cost** — derived from the product standard cost, the percentage of standard cost on the transaction, and units sold.
-- **Gross Profit** — Total Revenue minus Total Cost, at the row level.
-
-**On DimProducts:**
-
-- **Price Range** — classifies each product into Low Value, Medium Value, or High Value based on its retail price. This sits on the product dimension because price tier is a product attribute, and it is what drives the price-range analysis page.
-
-</details>
-
-<details>
-<summary><strong>Measures</strong></summary>
-
-<br>
-
-**Core aggregations:**
-
-- **Total Gross Profit** — the sum of row-level gross profit; the figure behind the headline profit card.
-- **Gross Profit Margin %** — Total Gross Profit divided by total revenue.
-- **Revenue per Unit** — total revenue divided by total units; used in the per-unit comparison visuals.
-- **Total Transactions** — a count of sales records by primary key.
-- **Avg Discount** — the average revenue discount across transactions.
-
-**Time-intelligence stack** — built as chained helper measures rather than one monolithic formula, which keeps the logic readable and reusable:
-
-- **Prev Mth** and **Prev Qtr** — anchor the prior period over the calendar table.
-- **Previous Month Gross Profit** — pulls the prior period value forward.
-- **MoM Growth** and **QoQ Growth** — express the period-over-period change as a ratio of current to previous, powering the growth trend page.
-
-</details>
-
----
 
 ## Outputs
 
